@@ -3,7 +3,7 @@ This is an Advanced Programming project handed to second year computer engineer 
 
 ## Crawler :
 - The crawler must not visit the same URL more than once.
-   - This include different URLs but the same content (decoding content).
+   - This include different URLs but the same content (Encoding content).
 - The crawler can only crawl documents of specific types (HTML is sufficient for the project).
 - The crawler must maintain its state so that it can, if interrupted, be started again to crawl the documents on the list without revisiting documents that have been previously downloaded.
    - interrupted by shutting down the laptop or the program --> DBMS.
