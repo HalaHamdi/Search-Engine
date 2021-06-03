@@ -14,3 +14,12 @@ This is an Advanced Programming project handed to second year computer engineer 
 - No of Crawled pages is 5000 page (for the sake of the project).
 - The crawler is independent program or process than the Indexer.
 
+## Interface:
+- Done
+   - 2 HTML web pages 
+   - handling suggestions of wordes for a certin letters 
+   - backend for both
+- Left
+   - handling client server communication to get list of links as a result and list words as a suggestions
+   - logo 
+ 
