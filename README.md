@@ -16,10 +16,20 @@ This is an Advanced Programming project handed to second year computer engineer 
 
 ## Interface:
 - Done
-   - 2 HTML web pages 
-   - handling suggestions of wordes for a certin letters 
+   - 2 HTML web pages
+   - handling suggestions of wordes for a certin letters
    - backend for both
 - Left
    - handling client server communication to get list of links as a result and list words as a suggestions
-   - logo 
- 
+   - logo
+
+#Indexer
+
+
+#Query-Processing:
+
+- The Query processing is what the backend of our page calls when the client requests pages of a certain word.
+- In this project we only considered the client to search for a single word and not a phrase Search.
+- The Query Processing stem the word the same way the indexer do , so relevant documents are retrieved.
+- Then the Query Processing Sorts the documents in decreasing order of "Content relevant" and this is calculated using " Normalized Term Frequency" method.
+- Not all the Documents in the MonogDB database are retrieved. The URLS that are recognized as spam are neglected.
