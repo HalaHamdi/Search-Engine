@@ -29,6 +29,8 @@ import java.util.HashSet;
 
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.client.model.UpdateOptions;
+
+
 import static com.mongodb.client.model.Filters.*;
 
 
@@ -81,6 +83,8 @@ public class Indexer {
 				
 				List<String> tokens = tokenize(nohtmlText);
 				
+				uploadTokenCountToDB(db, docNum, tokens.size());
+				
 				List<String> stopWordlessTokens = removeStopWords(tokens, stopWords);
 				
 				stemAndStore(stopWordlessTokens, docNum);
@@ -115,6 +119,14 @@ public class Indexer {
 			*/
 		}
 		
+	}
+	
+	public static void uploadTokenCountToDB(MongoDatabase db, int docNum, int tokenCount) {
+		
+		MongoCollection<Document>  docColl = db.getCollection("crawlerDocuments");
+		Bson filter = eq("url",urls.get(docNum));
+		Bson update = set ("wordCount",tokenCount);
+		docColl.updateOne(filter, update);
 	}
 	
 	public static void getCrawledDocs(MongoDatabase db){
