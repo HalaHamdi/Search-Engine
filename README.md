@@ -23,10 +23,10 @@ This is an Advanced Programming project handed to second year computer engineer 
    - handling client server communication to get list of links as a result and list words as a suggestions
    - logo
 
-#Indexer
+##Indexer :
 
 
-#Query-Processing:
+##Query-Processing :
 
 - The Query processing is what the backend of our page calls when the client requests pages of a certain word.
 - In this project we only considered the client to search for a single word and not a phrase Search.
