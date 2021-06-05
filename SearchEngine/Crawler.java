@@ -152,6 +152,8 @@ class robotCheck {
             }
             String urlFile=url.getFile();
             /*/URI uri = url.toURI().normalize();*/
+            
+            
             if(isAdded(url.getHost().replace("www","")))
             {
                 System.out.println("already checked");
@@ -252,13 +254,23 @@ class robotCheck {
 
         return false;
     }
-    private void InsertDB(URL the_link, String URLName) {
-
-        int Rank = 0;
+    private void InsertDB(URL the_link, String URLName) throws IOException {
+    	int Rank = 0;
+        
+        Connection connection = Jsoup.connect(the_link.toString());
+        Document document = connection.get();
+        String documentTitle = document.title().trim().replaceAll("\s", "");
+        documentTitle = documentTitle.replaceAll("www", "");
+        documentTitle = documentTitle.replaceAll(":", "");
+        documentTitle = documentTitle.replaceAll("https", "");
+        documentTitle = documentTitle.replaceAll("-", "");
+        documentTitle = documentTitle.replaceAll("/", "");
+        documentTitle = documentTitle.replaceAll("|", "");
+        
         if(linksAdded.containsKey(URLName))
             Rank = (Integer) linksAdded.get(URLName);
 
-        String Path = "../Downloads/"+URLName + ".html";
+        String Path = "../Downloads/"+documentTitle+ ".html";
         System.out.println("path : " + Path);
         System.out.println("Rank : " + Rank);
         MongoDatabase db = mongoClient.getDatabase("test");
@@ -271,8 +283,8 @@ class robotCheck {
 
     private void UpdateDB(URL the_link, String URLName)throws IOException {
         int Rank = 0;
-        if(linksAdded.containsKey(the_link.toString()))
-            Rank = (Integer) linksAdded.get(the_link.toString());
+        if(linksAdded.containsKey(URLName))
+            Rank = (Integer) linksAdded.get(URLName);
 
 
         MongoDatabase db;
