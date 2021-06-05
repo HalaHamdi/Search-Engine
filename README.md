@@ -1,6 +1,8 @@
 # Search-Engine
 This is an Advanced Programming project handed to second year computer engineer students.
 
+ <img src="https://github.com/Halahamdy22/Search-Engine/blob/master/Sniper1.png" width="300" alt="accessibility text">
+
 ## Crawler :
 - The crawler must not visit the same URL more than once.
    - This include different URLs but the same content (Encoding content).
