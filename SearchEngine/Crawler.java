@@ -1,7 +1,7 @@
 package SearchEngine;
 import java.io.*;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ class robotCheck {
     /* LinksVisited --> saving the host of the url and the disallows urls for this host */
     public static java.util.HashMap<String, ArrayList<String>> LinksVisited = new java.util.HashMap<String, ArrayList<String>>();
     /* string for the encoding content, int rank --> saving the links that is allowed to be downloaded and already downloaded */
-    public static java.util.HashMap<String, Integer> linksAdded = new java.util.HashMap<String, Integer>();
+    public static java.util.HashMap<URI, Integer> linksAdded = new java.util.HashMap<URI, Integer>();
 
     public static MongoClient mongoClient;
     /* empty constructor */
@@ -138,20 +138,35 @@ class robotCheck {
         return true;
     }
     /* collector of the above functions , pass the link as an argument and process the link and download it if possible */
-    boolean check(URL url)
+    synchronized boolean check(URL url)
     {
         try
         {
             /* handle if the same link already fetched before but with / or # or \ in the end */
-            if(url.toString().endsWith("/") ||url.toString().endsWith("#")||url.toString().endsWith("\\") )
+            String s;
+            if(url.toString().endsWith("/") ||url.toString().endsWith("#")||url.toString().endsWith("\\"))
             {
-                String s = url.toString().substring(0,url.toString().length() - 1);
+                System.out.println(url);
+                 s = url.toString().substring(0,url.toString().length() - 1);
+
                 System.out.println(s);
                 url = new URL(s);
 
             }
-            String urlFile=url.getFile();
-            /*/URI uri = url.toURI().normalize();*/
+            else if(url.toString().endsWith("//")||url.toString().endsWith("/#"))
+            {
+                s = url.toString().substring(0,url.toString().length() - 2);
+                System.out.println(s);
+                url = new URL(s);
+            }
+            else if(url.toString().endsWith("//*")||url.toString().endsWith("/*#"))
+            {
+                s = url.toString().replaceAll("/*","");
+                System.out.println(s);
+                url = new URL(s);
+            }
+            /* String urlFile=url.getFile(); */
+            URI uri = url.toURI().normalize();
             
             
             if(isAdded(url.getHost().replace("www","")))
@@ -159,18 +174,22 @@ class robotCheck {
                 System.out.println("already checked");
                 if(Allowed(url)) {
                     System.out.println("\n Allowed to download " + url);
-                    if(!linksAdded.containsKey(urlFile)) {
-                        linksAdded.put(urlFile, 0);
-                        downloadPage(url);
-                        InsertDB(url, urlFile);
+                    if(!linksAdded.containsKey(uri)) {
+                        linksAdded.put(uri, 0);
+                        synchronized (SeedsFile.Seeds) {
+                            downloadPage(url);
+                            InsertDB(url, uri);
+                        }
                         System.out.println("\n page downloaded");
                         return true;
                     }
                     else
                     {
-                        int oldValue = linksAdded.get(urlFile);
-                        linksAdded.replace(urlFile,oldValue,oldValue+1);
-                        UpdateDB(url, urlFile);
+                        int oldValue = linksAdded.get(uri);
+                        linksAdded.replace(uri,oldValue,oldValue+1);
+                        synchronized (SeedsFile.Seeds) {
+                            UpdateDB(url, uri);
+                        }
                         System.out.println("\n page existed , rank increased");
                         return false;
                     }
@@ -186,16 +205,20 @@ class robotCheck {
                 System.out.println("Not checked yet !! checking the link ....");
                 if(robotSafe(url.toString())) {
                     if (Allowed(url)){
-                        if (!linksAdded.containsKey(urlFile)) {
-                            linksAdded.put(urlFile, 0);
-                            downloadPage(url);
-                            InsertDB(url, urlFile);
+                        if (!linksAdded.containsKey(uri)) {
+                            linksAdded.put(uri, 0);
+                            synchronized (SeedsFile.Seeds) {
+                                downloadPage(url);
+                                InsertDB(url, uri);
+                            }
                             System.out.println("\n page downloaded");
                             return true;
                         } else {
-                            int oldValue = linksAdded.get(urlFile);
-                            linksAdded.replace(urlFile, oldValue, oldValue + 1);
-                            UpdateDB(url, urlFile);
+                            int oldValue = linksAdded.get(uri);
+                            linksAdded.replace(uri, oldValue, oldValue + 1);
+                            synchronized (SeedsFile.Seeds) {
+                                UpdateDB(url, uri);
+                            }
                             System.out.println("\n page existed , rank increased");
                             return false;
                         }
@@ -203,7 +226,7 @@ class robotCheck {
                 }
             }
         }
-        catch ( IOException exception)
+        catch (IOException | URISyntaxException exception)
         {
             System.out.println("\n Error while try to check for robots.txt "+ exception);
             return false;
@@ -241,7 +264,6 @@ class robotCheck {
                 reader.close();
                 writer.close();
                 System.out.println("Successfully Downloaded.");
-                InsertDB(url,documentTitle);
                 return true;
             }
 
@@ -254,12 +276,12 @@ class robotCheck {
 
         return false;
     }
-    private void InsertDB(URL the_link, String URLName) throws IOException {
+    private void InsertDB(URL the_link, URI uri) throws IOException {
     	int Rank = 0;
         
         Connection connection = Jsoup.connect(the_link.toString());
         Document document = connection.get();
-        String documentTitle = document.title().trim().replaceAll("\s", "");
+        String documentTitle = document.title().trim().replaceAll("\\s", "");
         documentTitle = documentTitle.replaceAll("www", "");
         documentTitle = documentTitle.replaceAll(":", "");
         documentTitle = documentTitle.replaceAll("https", "");
@@ -267,8 +289,8 @@ class robotCheck {
         documentTitle = documentTitle.replaceAll("/", "");
         documentTitle = documentTitle.replaceAll("|", "");
         
-        if(linksAdded.containsKey(URLName))
-            Rank = (Integer) linksAdded.get(URLName);
+        if(linksAdded.containsKey(uri))
+            Rank = (Integer) linksAdded.get(uri);
 
         String Path = "../Downloads/"+documentTitle+ ".html";
         System.out.println("path : " + Path);
@@ -281,10 +303,10 @@ class robotCheck {
         crawlerDocCollection.insertOne(DocInsert);
     }
 
-    private void UpdateDB(URL the_link, String URLName)throws IOException {
+    private void UpdateDB(URL the_link, URI uri)throws IOException {
         int Rank = 0;
-        if(linksAdded.containsKey(URLName))
-            Rank = (Integer) linksAdded.get(URLName);
+        if(linksAdded.containsKey(uri))
+            Rank = (Integer) linksAdded.get(uri);
 
 
         MongoDatabase db;
@@ -375,7 +397,7 @@ class SeedsFile {
         return line;
     }
     /* File Writer Creation: locked in order not more than one thread open the file and writing at same location.*/
-    synchronized void  FileWriter(String URL) {
+    void  FileWriter(String URL) {
         try{
 
             fileWriter = new FileWriter("Seeds.txt",true);   /* append here set true to avoid overlapping */
@@ -388,7 +410,7 @@ class SeedsFile {
         this.Level++;
         close();
     }
-    synchronized void setCurrentLine()
+    void setCurrentLine()
     {
         updateState();
         current_line ++;

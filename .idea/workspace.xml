@@ -4,6 +4,8 @@
     <list default="true" id="8ac3ac2d-072f-4292-b74d-d6c39e1507d5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SearchEngine/Crawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/SearchEngine/Crawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Seeds.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Seeds.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/state.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
