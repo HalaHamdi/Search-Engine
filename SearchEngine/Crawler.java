@@ -1,13 +1,10 @@
 package SearchEngine;
 import java.io.*;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.ArrayList;
-import org.apache.tika.io.IOUtils;
+import java.util.ArrayList;;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,11 +12,9 @@ import org.jsoup.nodes.Element;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.*;
-import java.net.URLConnection;
 /****************************************************************************/
 /* Robot Checker is responsible for check if the document is allowed to be downloaded*/
 class robotCheck {
-
     /* LinksVisited --> saving the host of the url and the disallows urls for this host */
     public static java.util.HashMap<String, ArrayList<String>> LinksVisited = new java.util.HashMap<String, ArrayList<String>>();
     /* string for the encoding content, int rank --> saving the links that is allowed to be downloaded and already downloaded */
@@ -29,26 +24,30 @@ class robotCheck {
     public robotCheck() { }
 
     /* this class is the main class of the robots checker --> access the robots.txt of the host and save it */
-    public boolean robotSafe(String link) throws IOException {
+    public boolean robotSafe(String link)  {
 
-        URL url = new URL(link);
-        String protocol = url.getProtocol(); /* such as : http / https / ftp */
-        String host = url.getHost();         /* such as : if we have url : https:// www.geeksforgeeks.org --> host : www.geeksforgeeks.org */
-        host.replace("www", "");
-
-        /* accessing robots.txt from the url */
+        URL url;
+        String host;
         try {
+             url = new URL(link);
+             String protocol = url.getProtocol(); /* such as : http / https / ftp */
+             host = url.getHost();         /* such as : if we have url : https:// www.geeksforgeeks.org --> host : www.geeksforgeeks.org */
+             host.replace("www", "");
+
+            /* accessing robots.txt from the url */
             url = new URL(protocol + "://" + host + "/robots.txt");
-        } catch (MalformedURLException error) {
+        }
+        catch (MalformedURLException error) {
             System.out.println("Error raised while trying to access robots.txt : " + error);
             return false;
         }
         /*** This part is responsible for accessing the robots.txt as string of commands ****/
         /*********/
         if (url != null) {
-            InputStream urlRobotStream = url.openStream();
             String robotsCommands;
             try {
+                InputStream urlRobotStream = url.openStream();
+
                 byte b[] = new byte[1000];
                 int numRead = urlRobotStream.read(b);
                 robotsCommands = new String(b, 0, numRead);
@@ -62,8 +61,10 @@ class robotCheck {
                 urlRobotStream.close();
 
                 /**System.out.println("String Commands is :" + robotsCommands); **/
-            } catch (IOException e) {
-                return true; /* if there is no robots.txt file, it is okay to download the page */
+            }
+            catch (IOException e) {
+                System.out.println("error while trying to extract disallows from the url");
+                return false; /* if there is no robots.txt file, it is okay to download the page */
             }
             if (robotsCommands.contains("Disallow")) /* if there are no "disallow" values, then they are not blocking anything.*/ {
                 String[] split = robotsCommands.split("\n");
@@ -84,7 +85,6 @@ class robotCheck {
 
                     } else if (line.toLowerCase().startsWith("disallow") && userAgent) {
                         if (typeOfUserAgent != null) {
-
                             int start = line.indexOf(":") + 1;
                             int end = line.length();
                             String s = line.substring(start, end).trim();
@@ -136,9 +136,11 @@ class robotCheck {
             /* handle if the same link already fetched before but with / or # or \ in the end */
             if(url.toString().endsWith("/") ||url.toString().endsWith("#")||url.toString().endsWith("\\") )
             {
-                url = new URL(url.toString().substring(0,url.toString().length() - 1));
-            }
+                String s = url.toString().substring(0,url.toString().length() - 1);
+                System.out.println(s);
+                url = new URL(s);
 
+            }
             String urlFile=url.getFile();
             /*/URI uri = url.toURI().normalize();*/
             if(isAdded(url.getHost().replace("www","")))
@@ -170,7 +172,7 @@ class robotCheck {
 
                 System.out.println("Not checked yet !! checking the link ....");
                 if(robotSafe(url.toString())) {
-                    if (Allowed(url)) {
+                    if (Allowed(url)){
                         if (!linksAdded.containsKey(urlFile)) {
                             linksAdded.put(urlFile, 0);
                             downloadPage(url);
@@ -186,10 +188,10 @@ class robotCheck {
                 }
             }
         }
-        catch (IOException exception)
+        catch ( IOException exception)
         {
             System.out.println("\n Error while try to check for robots.txt "+ exception);
-
+            return false;
         }
         return false;
     }
@@ -202,8 +204,9 @@ class robotCheck {
 
             Connection connection = Jsoup.connect(url.toString());
             Document document = connection.get();
+            String documentTitle = document.title().replaceAll("(\\s|\\|)","");
             BufferedWriter writer =
-                    new BufferedWriter(new FileWriter("./Downloads/"+document.title()+".html"));
+                    new BufferedWriter(new FileWriter("./Downloads/"+documentTitle+".html"));
 
 
             String line;
@@ -231,7 +234,7 @@ class SeedsFile {
     // TODO: save the state of the crawler into the database --> Level
     static File Seeds;
     static FileWriter fileWriter;
-    static int Level = 6;            /* saving the count of the links crawled, initially with 6 since seed has 5 links else get from the db */
+    static int Level = 7;            /* saving the count of the links crawled, initially with 6 since seed has 5 links else get from the db */
     static int current_line = 1;
 
     public SeedsFile()
@@ -309,7 +312,7 @@ public class Crawler implements Runnable {
     private int ThreadID;
     final SeedsFile seeds;
     public Crawler(int id, SeedsFile inputFile) {
-        this.seeds = inputFile;
+        seeds = inputFile;
         this.ThreadID = id;
         System.out.println("\n Crawler with rank =  " + this.ThreadID + " created.");
     }
@@ -343,16 +346,21 @@ public class Crawler implements Runnable {
 
     private synchronized void crawl(int link) {
         while (true) {
-            synchronized (this.seeds) {
 
-                if (SeedsFile.Level >= MAX_PAGES ) {
+
+                if (SeedsFile.Level >= MAX_PAGES) {
                     System.out.println("\n Crawling reached its maximum now, " + MAX_PAGES + "pages are available now. ");
+                    break;
                 }
                 else {
+                    String URL;
+                    synchronized (seeds) {
+                         URL = this.seeds.FileReader(SeedsFile.current_line);
 
-                    String URL = this.seeds.FileReader(SeedsFile.current_line);
+                            seeds.setCurrentLine();
+                    }
                     if (!URL.isEmpty())  {
-                        System.out.println("\n Thread num = " + Thread.currentThread().getName() + " now fetch link at line " + SeedsFile.current_line + " link is " + URL);
+                        System.out.println("\n Thread num = " + Thread.currentThread().getName() + " now fetch link at line " + Integer.toString(SeedsFile.current_line - 1) + " link is " + URL);
 
                         try {
                             if(checker.check(new URL(URL)))
@@ -376,8 +384,10 @@ public class Crawler implements Runnable {
                                     if(checker.check(new URL(nextLink)))
                                     {
                                         System.out.println("Writing to seeds");
-                                        seeds.FileWriter(nextLink);
-
+                                        synchronized (seeds) {
+                                            if(robotCheck.linksAdded.containsKey(nextLink)) continue;
+                                            else seeds.FileWriter(nextLink);
+                                        }
                                     }
                                 }
                                 catch (IOException exception)
@@ -387,13 +397,12 @@ public class Crawler implements Runnable {
 
 
                             }
-
                         }
-                        this.seeds.setCurrentLine();
+
                     }
                     else {break;}
                 }
-            }
+
             try {
                 Thread.sleep(500);
 
