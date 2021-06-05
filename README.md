@@ -11,8 +11,6 @@ This is an Advanced Programming project handed to second year computer engineer 
 - Provide a multithreaded crawler implementation where the user can control the number of threads before starting the crawler.
 - Take Care of the choice of your seeds.
 - When Crawler finishes one iteration by reaching stopping criteria, it restarts again, Frequency of crawling is an important part of a web crawler. Some sites will be visited more often than others. You have to set some criteria to the sites. In another words, during recrawl, you don’t have to repeat all the sites again.
-- No of Crawled pages is 5000 page (for the sake of the project).
-- The crawler is independent program or process than the Indexer.
 
 ## Interface:
 - Done
