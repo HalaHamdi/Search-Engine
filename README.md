@@ -3,7 +3,10 @@ This is an Advanced Programming project handed to second year computer engineer 
 
  <img src="https://github.com/Halahamdy22/Search-Engine/blob/master/Sniper1.png" width="300" alt="accessibility text">
 
-## Crawler :
+```diff 
++ Crawler
+```
+---------------------------------
 - The crawler must not visit the same URL more than once.
    - This include different URLs but the same content (Encoding content).
 - The crawler can only crawl documents of specific types (HTML is sufficient for the project).
@@ -13,7 +16,11 @@ This is an Advanced Programming project handed to second year computer engineer 
 - Take Care of the choice of your seeds.
 - When Crawler finishes one iteration by reaching stopping criteria, it restarts again, Frequency of crawling is an important part of a web crawler. Some sites will be visited more often than others. You have to set some criteria to the sites. In another words, during recrawl, you don’t have to repeat all the sites again.
 
-## Interface:
+
+```diff 
+- Interface
+```
+---------------------------------
 - Done
    - 2 HTML web pages
    - handling suggestions of words for a certain letters
@@ -22,7 +29,11 @@ This is an Advanced Programming project handed to second year computer engineer 
    - handling client server communication to get list of links as a result and list words as a suggestions
    - logo
 
-## Indexer :
+
+```diff 
+! Indexer
+```
+---------------------------------
 - Get the crawled document local paths from the DB
 - Preprocess each crawled document, through:
    - Parse the document through it's content out of the html
@@ -37,7 +48,11 @@ This is an Advanced Programming project handed to second year computer engineer 
 - Upload the hashmap containing the stemmed words and its corresponding data into the DB
 - Calculate the idf of each word then store and upload it onto the DB 
 
-## Query-Processing :
+
+```diff 
+- Query processor
+```
+---------------------------------
 
 - The Query processing is what the backend of our page calls when the client requests pages of a certain word.
 - In this project we only considered the client to search for a single word and not a phrase Search.
