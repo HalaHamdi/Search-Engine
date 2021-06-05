@@ -231,7 +231,7 @@ class SeedsFile {
     // TODO: save the state of the crawler into the database --> Level
     static File Seeds;
     static FileWriter fileWriter;
-    static int Level = 6;            /* saving the count of the links crawled, initially with 6 since seed has 5 links else get from the db */
+    static int Level = 7;            /* saving the count of the links crawled, initially with 6 since seed has 5 links else get from the db */
     static int current_line = 1;
 
     public SeedsFile()
