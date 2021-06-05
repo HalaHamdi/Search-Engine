@@ -239,7 +239,7 @@ class robotCheck {
                 reader.close();
                 writer.close();
                 System.out.println("Successfully Downloaded.");
-                InsertDB(url, documentTitle);
+                InsertDB(url,documentTitle);
                 return true;
             }
 
@@ -252,37 +252,29 @@ class robotCheck {
 
         return false;
     }
-    private void InsertDB(URL the_link, String URLName) throws IOException {
+    private void InsertDB(URL the_link, String URLName) {
 
         int Rank = 0;
         if(linksAdded.containsKey(URLName))
             Rank = (Integer) linksAdded.get(URLName);
-        Connection connection = Jsoup.connect(the_link.toString());
-        Document document = connection.get();
-        String documentTitle = document.title().trim().replaceAll("\\s","");
-        documentTitle = documentTitle.replaceAll("www","");
-        documentTitle = documentTitle.replaceAll(":","");
-        documentTitle = documentTitle.replaceAll("https","");
-        documentTitle = documentTitle.replaceAll("-","");
-        documentTitle = documentTitle.replaceAll("/","");
-        documentTitle = documentTitle.replaceAll("|","");
 
-        String Path = "../Downloads/"+documentTitle + ".html";
+        String Path = "../Downloads/"+URLName + ".html";
         System.out.println("path : " + Path);
         System.out.println("Rank : " + Rank);
         MongoDatabase db = mongoClient.getDatabase("test");
         MongoCollection<org.bson.Document> crawlerDocCollection = db.getCollection("crawlerDocuments");
         org.bson.Document DocInsert = new org.bson.Document().append("url", the_link.toString())
-
                 .append("localPath", Path)
                 .append("Rank", Rank);
         crawlerDocCollection.insertOne(DocInsert);
     }
 
-    private void UpdateDB(URL the_link, String URLName){
+    private void UpdateDB(URL the_link, String URLName)throws IOException {
         int Rank = 0;
-        if(linksAdded.containsKey(URLName))
-            Rank = (Integer) linksAdded.get(URLName);
+        if(linksAdded.containsKey(the_link.toString()))
+            Rank = (Integer) linksAdded.get(the_link.toString());
+
+
         MongoDatabase db;
         db = mongoClient.getDatabase("test");
         MongoCollection<org.bson.Document> crawlerDocCollection = db.getCollection("crawlerDocuments");
