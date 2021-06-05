@@ -217,40 +217,57 @@ class robotCheck {
 
             Connection connection = Jsoup.connect(url.toString());
             Document document = connection.get();
-            String documentTitle = document.title().trim().replaceAll("\\s","");
-            documentTitle = documentTitle.replaceAll("www","");
-            documentTitle = documentTitle.replaceAll(":","");
-            documentTitle = documentTitle.replaceAll("https","");
-            documentTitle = documentTitle.replaceAll("-","");
-            documentTitle = documentTitle.replaceAll("/","");
-            documentTitle = documentTitle.replaceAll("|","");
-            BufferedWriter writer =
-                    new BufferedWriter(new FileWriter("./Downloads/"+documentTitle+".html"));
+            String documentTitle = document.title().trim().replaceAll("\\s", "");
+            documentTitle = documentTitle.replaceAll("www", "");
+            documentTitle = documentTitle.replaceAll(":", "");
+            documentTitle = documentTitle.replaceAll("https", "");
+            documentTitle = documentTitle.replaceAll("-", "");
+            documentTitle = documentTitle.replaceAll("/", "");
+            documentTitle = documentTitle.replaceAll("|", "");
+
+            if (!new File("./Downloads/" + documentTitle + ".html").exists()) {
+
+                BufferedWriter writer =
+                        new BufferedWriter(new FileWriter("./Downloads/" + documentTitle + ".html"));
 
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                writer.write(line);
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    writer.write(line);
+                }
+
+                reader.close();
+                writer.close();
+                System.out.println("Successfully Downloaded.");
+                InsertDB(url, documentTitle);
+                return true;
             }
 
-            reader.close();
-            writer.close();
-            System.out.println("Successfully Downloaded.");
-            InsertDB(url, documentTitle);
         }
 
-        catch (IOException exception) {
-            System.out.println("IOException raised " + exception);
-            return false;
-        }
-        return true;
+        catch(IOException exception){
+                System.out.println("IOException raised " + exception);
+                return false;
+            }
+
+        return false;
     }
-    private void InsertDB(URL the_link, String URLName){
+    private void InsertDB(URL the_link, String URLName) throws IOException {
 
         int Rank = 0;
-        if(linksAdded.get(URLName) != null)
+        if(linksAdded.containsKey(URLName))
             Rank = (Integer) linksAdded.get(URLName);
-        String Path = "../Downloads/"+URLName + ".html";
+        Connection connection = Jsoup.connect(the_link.toString());
+        Document document = connection.get();
+        String documentTitle = document.title().trim().replaceAll("\\s","");
+        documentTitle = documentTitle.replaceAll("www","");
+        documentTitle = documentTitle.replaceAll(":","");
+        documentTitle = documentTitle.replaceAll("https","");
+        documentTitle = documentTitle.replaceAll("-","");
+        documentTitle = documentTitle.replaceAll("/","");
+        documentTitle = documentTitle.replaceAll("|","");
+
+        String Path = "../Downloads/"+documentTitle + ".html";
         System.out.println("path : " + Path);
         System.out.println("Rank : " + Rank);
         MongoDatabase db = mongoClient.getDatabase("test");
@@ -262,9 +279,9 @@ class robotCheck {
         crawlerDocCollection.insertOne(DocInsert);
     }
 
-    private void UpdateDB(java.net.URL the_link, String URLName){
+    private void UpdateDB(URL the_link, String URLName){
         int Rank = 0;
-        if(linksAdded.get(URLName) != null)
+        if(linksAdded.containsKey(URLName))
             Rank = (Integer) linksAdded.get(URLName);
         MongoDatabase db;
         db = mongoClient.getDatabase("test");
@@ -402,7 +419,7 @@ public class Crawler implements Runnable {
     @Override
     public void run() {
 
-        crawl(this.seeds.current_line);
+        crawl(seeds.current_line);
 
     }
 
@@ -439,7 +456,7 @@ public class Crawler implements Runnable {
                 else {
                     String URL;
                     synchronized (seeds) {
-                         URL = this.seeds.FileReader(SeedsFile.current_line);
+                         URL = seeds.FileReader(SeedsFile.current_line);
                         seeds.setCurrentLine();
                     }
                     if (!URL.isEmpty())  {
