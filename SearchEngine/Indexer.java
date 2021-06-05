@@ -65,7 +65,7 @@ public class Indexer {
 		
 		try(MongoClient mongoClient = MongoClients.create("mongodb+srv://Noran:ci9L$h$Cp4_SVJr@cluster0.bktb5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")){
 			MongoDatabase db = mongoClient.getDatabase("test");
-		
+			
 			//get the crawled documents; their local paths and urls from the db
 			getCrawledDocs(db);
 	
@@ -101,6 +101,8 @@ public class Indexer {
 			System.out.println("time taken for processing: " + (start2-start1)/1000000000.0 + " sec");
 			System.out.println("time taken for DB upload: " + (end-start2)/1000000000.0 + " sec");
 			
+			calcIDF(db,docsCount);
+			
 			/*
 			//for debugging purposes
 			int termsInInv = 0;
@@ -119,6 +121,19 @@ public class Indexer {
 			*/
 		}
 		
+	}
+	
+	public static void calcIDF(MongoDatabase db, int docsCount) {
+		MongoCollection invColl = db.getCollection("invertedIndex");
+		
+		Consumer<Document> getTF = doc -> {
+			double idf = java.lang.Math.log(docsCount / (double)doc.get("TF")); 
+			Bson update = set("idf",idf);
+			invColl.updateOne(doc, update);
+		};
+		
+		//Applying that function for each document retrieved from the collection
+		invColl.find().forEach(getTF);
 	}
 	
 	public static void uploadTokenCountToDB(MongoDatabase db, int docNum, int tokenCount) {
