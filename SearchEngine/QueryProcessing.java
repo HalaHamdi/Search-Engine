@@ -1,4 +1,4 @@
-package searchengine.Query;
+package SearchEngine;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.*;
 import java.lang.Float;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class QueryProcessing {
 public static void main(String[] args) {
