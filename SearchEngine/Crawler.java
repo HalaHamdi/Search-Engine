@@ -151,6 +151,7 @@ class robotCheck {
                     if(!linksAdded.containsKey(urlFile)) {
                         linksAdded.put(urlFile, 0);
                         downloadPage(url);
+                        InsertDB(url, urlFile);
                         System.out.println("\n page downloaded");
                         return true;
                     }
@@ -158,6 +159,7 @@ class robotCheck {
                     {
                         int oldValue = linksAdded.get(urlFile);
                         linksAdded.replace(urlFile,oldValue,oldValue+1);
+                        UpdateDB(url, urlFile);
                         System.out.println("\n page existed , rank increased");
                         return false;
                     }
@@ -176,11 +178,13 @@ class robotCheck {
                         if (!linksAdded.containsKey(urlFile)) {
                             linksAdded.put(urlFile, 0);
                             downloadPage(url);
+                            InsertDB(url, urlFile);
                             System.out.println("\n page downloaded");
                             return true;
                         } else {
                             int oldValue = linksAdded.get(urlFile);
                             linksAdded.replace(urlFile, oldValue, oldValue + 1);
+                            UpdateDB(url, urlFile);
                             System.out.println("\n page existed , rank increased");
                             return false;
                         }
@@ -224,6 +228,30 @@ class robotCheck {
             return false;
         }
         return true;
+    }
+    private void InsertDB(URL the_link, String URLName){
+        int Rank = linksAdded.get(URLName);
+        String Path = "./Downloads/"+URLName;
+        System.out.println("path : " + URLName);
+        System.out.println("Rank : " + Rank);
+        MongoClient mongoClient = MongoClients.create("mongodb+srv://Noran:ci9L$h$Cp4_SVJr@cluster0.bktb5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+        MongoDatabase db = mongoClient.getDatabase("test");
+        MongoCollection<org.bson.Document> crawlerDocCollection = db.getCollection("crawlerDocuments");
+        org.bson.Document DocInsert = new org.bson.Document("url", the_link)
+                .append("localPath", Path)
+                .append("Rank", Rank);
+        crawlerDocCollection.insertOne(DocInsert);
+    }
+
+    private void UpdateDB(java.net.URL the_link, String URLName){
+        int Rank = linksAdded.get(URLName);
+        MongoClient mongoClient = MongoClients.create("mongodb+srv://Noran:ci9L$h$Cp4_SVJr@cluster0.bktb5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+        MongoDatabase db = mongoClient.getDatabase("test");
+        MongoCollection<org.bson.Document> crawlerDocCollection = db.getCollection("crawlerDocuments");
+
+        Bson filter = eq("url",the_link);
+        Bson UpdateRank = inc("Rank",1);
+        crawlerDocCollection.updateOne(filter, UpdateRank);
     }
 }
 /*************************************************************************************/

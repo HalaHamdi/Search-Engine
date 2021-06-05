@@ -5,9 +5,21 @@ const Wepper = document.querySelector(".wrapper");
 const SuggestionBox = searchWepper.querySelector(".autocom-box");
 const FormInput = document.getElementById("search");
 let UserData ;
+let Suggestions = [];
 InputBox.onkeyup = (e)=>{
     let UserData = e.target.value;
     let EmptyArray = [];
+    $.ajax({
+        type: 'POST',
+        url: './assets/bootstrap/js/Suggestions.js',
+        //data: data,
+        success:function(data, status, xhr){
+            Suggestions = data;
+            Suggestions = Suggestions.split(",");
+            console.log(Suggestions);
+        }
+
+    });
     if(UserData)
     {
         EmptyArray = Suggestions.filter((data)=>{
