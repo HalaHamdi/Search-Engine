@@ -21,7 +21,19 @@ This is an Advanced Programming project handed to second year computer engineer 
    - logo
 
 ## Indexer :
-
+- Get the crawled document local paths from the DB
+- Preprocess each crawled document, through:
+   - Parse the document through it's content out of the html
+   - Convert the content of the document into tokens, through removing punctuation and all symbols other than the english alphabet and numbers.
+   - Calculate the tokens count and store it in the DB as the # of words contained within the current document
+   - Filter the tokens through removing stop words from them
+   - Stem each token using porter stemmer library
+   - Store the stemmed token as a hash map key, where its value corresponds to the:
+      - Hashmap
+         -  its key is the document url containing that word
+         -  its value is an object of type docContainer, which holds the DF of that token-doc relationship, also a list of the positions that token was mentioned in that doc 
+- Upload the hashmap containing the stemmed words and its corresponding data into the DB
+- Calculate the idf of each word then store and upload it onto the DB 
 
 ## Query-Processing :
 
