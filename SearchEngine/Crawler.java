@@ -4,7 +4,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.ArrayList;;
+import java.util.ArrayList;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.conversions.Bson;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,6 +17,8 @@ import org.jsoup.nodes.Element;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.*;
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Updates.*;
 /****************************************************************************/
 /* Robot Checker is responsible for check if the document is allowed to be downloaded*/
 class robotCheck {
@@ -20,8 +27,11 @@ class robotCheck {
     /* string for the encoding content, int rank --> saving the links that is allowed to be downloaded and already downloaded */
     public static java.util.HashMap<String, Integer> linksAdded = new java.util.HashMap<String, Integer>();
 
+    public static MongoClient mongoClient;
     /* empty constructor */
-    public robotCheck() { }
+    public robotCheck() {
+        mongoClient = MongoClients.create("mongodb+srv://Noran:ci9L$h$Cp4_SVJr@cluster0.bktb5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+    }
 
     /* this class is the main class of the robots checker --> access the robots.txt of the host and save it */
     public boolean robotSafe(String link)  {
@@ -32,10 +42,10 @@ class robotCheck {
              url = new URL(link);
              String protocol = url.getProtocol(); /* such as : http / https / ftp */
              host = url.getHost();         /* such as : if we have url : https:// www.geeksforgeeks.org --> host : www.geeksforgeeks.org */
-             host.replace("www", "");
 
             /* accessing robots.txt from the url */
             url = new URL(protocol + "://" + host + "/robots.txt");
+
         }
         catch (MalformedURLException error) {
             System.out.println("Error raised while trying to access robots.txt : " + error);
@@ -59,11 +69,10 @@ class robotCheck {
                     }
                 }
                 urlRobotStream.close();
-
                 /**System.out.println("String Commands is :" + robotsCommands); **/
             }
             catch (IOException e) {
-                System.out.println("error while trying to extract disallows from the url");
+                System.out.println("error while trying to extract disallows from the url "+url);
                 return false; /* if there is no robots.txt file, it is okay to download the page */
             }
             if (robotsCommands.contains("Disallow")) /* if there are no "disallow" values, then they are not blocking anything.*/ {
@@ -208,7 +217,13 @@ class robotCheck {
 
             Connection connection = Jsoup.connect(url.toString());
             Document document = connection.get();
-            String documentTitle = document.title().replaceAll("(\\s|\\|)","");
+            String documentTitle = document.title().trim().replaceAll("\\s","");
+            documentTitle = documentTitle.replaceAll("www","");
+            documentTitle = documentTitle.replaceAll(":","");
+            documentTitle = documentTitle.replaceAll("https","");
+            documentTitle = documentTitle.replaceAll("-","");
+            documentTitle = documentTitle.replaceAll("/","");
+            documentTitle = documentTitle.replaceAll("|","");
             BufferedWriter writer =
                     new BufferedWriter(new FileWriter("./Downloads/"+documentTitle+".html"));
 
@@ -221,6 +236,7 @@ class robotCheck {
             reader.close();
             writer.close();
             System.out.println("Successfully Downloaded.");
+            InsertDB(url, documentTitle);
         }
 
         catch (IOException exception) {
@@ -230,27 +246,32 @@ class robotCheck {
         return true;
     }
     private void InsertDB(URL the_link, String URLName){
-        int Rank = linksAdded.get(URLName);
-        String Path = "./Downloads/"+URLName;
-        System.out.println("path : " + URLName);
+
+        int Rank = 0;
+        if(linksAdded.get(URLName) != null)
+            Rank = (Integer) linksAdded.get(URLName);
+        String Path = "../Downloads/"+URLName + ".html";
+        System.out.println("path : " + Path);
         System.out.println("Rank : " + Rank);
-        MongoClient mongoClient = MongoClients.create("mongodb+srv://Noran:ci9L$h$Cp4_SVJr@cluster0.bktb5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
         MongoDatabase db = mongoClient.getDatabase("test");
         MongoCollection<org.bson.Document> crawlerDocCollection = db.getCollection("crawlerDocuments");
-        org.bson.Document DocInsert = new org.bson.Document("url", the_link)
+        org.bson.Document DocInsert = new org.bson.Document().append("url", the_link.toString())
+
                 .append("localPath", Path)
                 .append("Rank", Rank);
         crawlerDocCollection.insertOne(DocInsert);
     }
 
     private void UpdateDB(java.net.URL the_link, String URLName){
-        int Rank = linksAdded.get(URLName);
-        MongoClient mongoClient = MongoClients.create("mongodb+srv://Noran:ci9L$h$Cp4_SVJr@cluster0.bktb5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
-        MongoDatabase db = mongoClient.getDatabase("test");
+        int Rank = 0;
+        if(linksAdded.get(URLName) != null)
+            Rank = (Integer) linksAdded.get(URLName);
+        MongoDatabase db;
+        db = mongoClient.getDatabase("test");
         MongoCollection<org.bson.Document> crawlerDocCollection = db.getCollection("crawlerDocuments");
 
-        Bson filter = eq("url",the_link);
-        Bson UpdateRank = inc("Rank",1);
+        Bson filter = eq("url",the_link.toString());
+        Bson UpdateRank = set("Rank",Rank);
         crawlerDocCollection.updateOne(filter, UpdateRank);
     }
 }
@@ -260,23 +281,27 @@ class SeedsFile {
 
     // TODO ::  encoding the whole content of url then save (case of different links with the same page content).
     // TODO: save the state of the crawler into the database --> Level
-    static File Seeds;
+    static File Seeds,state;
     static FileWriter fileWriter;
     static int Level = 7;            /* saving the count of the links crawled, initially with 6 since seed has 5 links else get from the db */
-    static int current_line = 1;
+    static int current_line ;
+
 
     public SeedsFile()
     {
         FileCreate();
+        current_line = getState() ;
+        System.out.println("Current line:"+current_line);
     }
     /* File creation :  static since all object from that class will deal with the same version*/
     private void FileCreate() {
         try {
             Seeds = new File("Seeds.txt");
-            if (Seeds.createNewFile()) {
-                System.out.println("\n Seeds file created successfully ..! ");
+            state = new File("state.txt");
+            if (Seeds.createNewFile()||state.createNewFile()) {
+                System.out.println("\n Seeds and state files created successfully ..! ");
             } else {
-                System.out.println("\n File is already existed");
+                System.out.println("\n Files is already existed");
 
 
             }
@@ -284,6 +309,34 @@ class SeedsFile {
         catch (IOException error) {
             System.out.println("\n An error occurred while creating the file .. " + error.getMessage());
         }
+    }
+    private void updateState() {
+        try{
+
+            fileWriter = new FileWriter("state.txt",false);   /* append here set true to avoid overlapping */
+            fileWriter.write( Integer.toString(current_line+1));
+
+        }
+        catch(Exception error)
+        { System.out.println(error.getMessage());}
+
+        close();
+    }
+    static private int getState() {
+        String line ="";
+        try
+        {
+            Stream<String> lines =  Files.lines(Paths.get(state.getPath()));
+            line  = lines.findFirst().orElse("");
+        }
+        catch (IOException error)
+        {
+            System.out.println("\n"+ error.getMessage());
+        }
+
+
+        return Integer.parseInt(line);
+
     }
     String FileReader(int lineIndex) {
         String line ="";
@@ -316,6 +369,7 @@ class SeedsFile {
     }
     synchronized void setCurrentLine()
     {
+        updateState();
         current_line ++;
     }
     void close(){
@@ -378,14 +432,15 @@ public class Crawler implements Runnable {
 
                 if (SeedsFile.Level >= MAX_PAGES) {
                     System.out.println("\n Crawling reached its maximum now, " + MAX_PAGES + "pages are available now. ");
+                    SeedsFile.current_line = 0;
+                    seeds.setCurrentLine();
                     break;
                 }
                 else {
                     String URL;
                     synchronized (seeds) {
                          URL = this.seeds.FileReader(SeedsFile.current_line);
-
-                            seeds.setCurrentLine();
+                        seeds.setCurrentLine();
                     }
                     if (!URL.isEmpty())  {
                         System.out.println("\n Thread num = " + Thread.currentThread().getName() + " now fetch link at line " + Integer.toString(SeedsFile.current_line - 1) + " link is " + URL);
