@@ -80,6 +80,8 @@ public class Indexer {
 			for (int docNum=0;docNum<docsCount;docNum++) {
 				
 				String nohtmlText = extractTextFromHTML(new FileReader (localPaths.get(docNum)));
+				//String nohtmlText = extractTextFromHTML(new FileReader ("./Downloads/ArduinoHome.html"));
+				
 				
 				List<String> tokens = tokenize(nohtmlText);
 				

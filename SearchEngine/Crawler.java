@@ -9,6 +9,8 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.UpdateOptions;
+
 import org.bson.conversions.Bson;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -272,7 +274,7 @@ class robotCheck {
     }
     private void InsertDB(URL the_link, URI uri) throws IOException {
         int Rank = 0;
-
+        UpdateOptions options = new UpdateOptions().upsert(true);
         Connection connection = Jsoup.connect(the_link.toString());
         Document document = connection.get();
         String documentTitle = document.title().trim().replaceAll("\\s", "");
@@ -286,15 +288,17 @@ class robotCheck {
         if(linksAdded.containsKey(uri))
             Rank = (Integer) linksAdded.get(uri);
 
-        String Path = "../Downloads/"+documentTitle+ ".html";
+        String Path = "./Downloads/"+documentTitle+ ".html";
         System.out.println("path : " + Path);
         System.out.println("Rank : " + Rank);
         MongoDatabase db = mongoClient.getDatabase("test");
         MongoCollection<org.bson.Document> crawlerDocCollection = db.getCollection("crawlerDocuments");
-        org.bson.Document DocInsert = new org.bson.Document().append("url", the_link.toString())
-                .append("localPath", Path)
-                .append("Rank", Rank);
-        crawlerDocCollection.insertOne(DocInsert);
+        
+        Bson filter = eq("url", the_link.toString());
+        Bson updateOp1 = set("localPath", Path);
+        Bson updateOp2 = set("Rank", Rank);
+        Bson updateOp = combine(updateOp1,updateOp2);
+        crawlerDocCollection.updateOne(filter,updateOp,options);
     }
 
     private void UpdateDB(URL the_link, URI uri)throws IOException {
