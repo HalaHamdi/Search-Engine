@@ -4,7 +4,9 @@
     <list default="true" id="8ac3ac2d-072f-4292-b74d-d6c39e1507d5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SearchEngine/Crawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/SearchEngine/Crawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SearchEngine/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/SearchEngine/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Seeds.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Seeds.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/state.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,8 +27,24 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Indexer">
+    <configuration name="Indexer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SearchEngine.Indexer" />
+      <module name="Search-Engine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="SearchEngine.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="SearchEngine.Main" />
       <module name="Search-Engine" />
@@ -42,6 +60,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Indexer" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
