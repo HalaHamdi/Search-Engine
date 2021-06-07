@@ -1,1 +1,0 @@
-"https://stackoverflow.com/questions/979975/how-to-get-the-value-from-the-get-parameters" , "https://github.com/ElzeroWebSchool/Ajax/blob/master/index.html" , "https://www.w3schools.com/jsref/prop_element_classlist.asp"

@@ -1,0 +1,74 @@
+const listItems = <%lists%>
+  
+  const listEl = document.getElementById("list") as HTMLDivElement;
+  const paginationEl = document.getElementById("pagination") as HTMLDivElement;
+  
+  let currentPage = 1;
+  let rows = 5;
+  
+  function displayList(
+    items: ListItems,
+    wrapper: HTMLDivElement,
+    rowsPerPage: number,
+    page: number
+  ) {
+    wrapper.innerHTML = "";
+    page--;
+  
+    let start = rowsPerPage * page;
+    let end = start + rowsPerPage;
+  
+    let paginatedItems = items.slice(start, end);
+  
+    for (let i = 0; i < paginatedItems.length; i++) {
+      let item = paginatedItems[i];
+  
+      let itemEl = document.createElement("div");
+      itemEl.classList.add("item");
+      itemEl.textContent = item;
+  
+      wrapper.appendChild(itemEl);
+    }
+  }
+  
+  function setupPagination(
+    items: ListItems,
+    wrapper: HTMLDivElement,
+    rowsPerPage: number
+  ) {
+    wrapper.innerHTML = "";
+  
+    let pageCount = Math.ceil(items.length / rowsPerPage);
+  
+    for (let i = 1; i < pageCount + 1; i++) {
+      const btn = paginationButton(i, listItems);
+      wrapper.appendChild(btn);
+    }
+  }
+  
+  function paginationButton(page: number, items: ListItems) {
+    const button = document.createElement("button");
+    button.textContent = page.toString();
+  
+    if (currentPage === page) {
+      button.classList.add("active");
+    }
+  
+    button.addEventListener("click", function () {
+      currentPage = page;
+      displayList(listItems, listEl, rows, currentPage);
+  
+      let currentBtn = document.querySelector(
+        ".pagination button.active"
+      ) as HTMLDivElement;
+      currentBtn?.classList.remove("active");
+  
+      button.classList.add("active");
+    });
+  
+    return button;
+  }
+  
+  displayList(listItems, listEl, rows, currentPage);
+  setupPagination(listItems, paginationEl, rows);
+  
