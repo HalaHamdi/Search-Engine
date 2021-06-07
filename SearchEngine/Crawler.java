@@ -39,9 +39,9 @@ class robotCheck {
         URL url;
         String host;
         try {
-             url = new URL(link);
-             String protocol = url.getProtocol(); /* such as : http / https / ftp */
-             host = url.getHost();         /* such as : if we have url : https:// www.geeksforgeeks.org --> host : www.geeksforgeeks.org */
+            url = new URL(link);
+            String protocol = url.getProtocol(); /* such as : http / https / ftp */
+            host = url.getHost();         /* such as : if we have url : https:// www.geeksforgeeks.org --> host : www.geeksforgeeks.org */
 
             /* accessing robots.txt from the url */
             url = new URL(protocol + "://" + host + "/robots.txt");
@@ -144,31 +144,25 @@ class robotCheck {
         {
             /* handle if the same link already fetched before but with / or # or \ in the end */
             String s;
-            if(url.toString().endsWith("/") ||url.toString().endsWith("#")||url.toString().endsWith("\\"))
+            if(url.toString().endsWith("/*$") ||url.toString().endsWith("#*$")||url.toString().endsWith("//*$"))
             {
-                System.out.println(url);
-                 s = url.toString().substring(0,url.toString().length() - 1);
+                s = url.toString().replaceFirst("/*$", "");
+                s = url.toString().replaceFirst("#*$", "");
 
                 System.out.println(s);
                 url = new URL(s);
 
             }
-            else if(url.toString().endsWith("//")||url.toString().endsWith("/#"))
+            else if (url.toString().endsWith("/#"))
             {
-                s = url.toString().substring(0,url.toString().length() - 2);
-                System.out.println(s);
-                url = new URL(s);
-            }
-            else if(url.toString().endsWith("//*")||url.toString().endsWith("/*#"))
-            {
-                s = url.toString().replaceAll("/*","");
+                s = url.toString().replaceFirst("/#", "");
                 System.out.println(s);
                 url = new URL(s);
             }
             /* String urlFile=url.getFile(); */
             URI uri = url.toURI().normalize();
-            
-            
+
+
             if(isAdded(url.getHost().replace("www","")))
             {
                 System.out.println("already checked");
@@ -270,15 +264,15 @@ class robotCheck {
         }
 
         catch(IOException exception){
-                System.out.println("IOException raised " + exception);
-                return false;
-            }
+            System.out.println("IOException raised " + exception);
+            return false;
+        }
 
         return false;
     }
     private void InsertDB(URL the_link, URI uri) throws IOException {
-    	int Rank = 0;
-        
+        int Rank = 0;
+
         Connection connection = Jsoup.connect(the_link.toString());
         Document document = connection.get();
         String documentTitle = document.title().trim().replaceAll("\\s", "");
@@ -288,7 +282,7 @@ class robotCheck {
         documentTitle = documentTitle.replaceAll("-", "");
         documentTitle = documentTitle.replaceAll("/", "");
         documentTitle = documentTitle.replaceAll("|", "");
-        
+
         if(linksAdded.containsKey(uri))
             Rank = (Integer) linksAdded.get(uri);
 
@@ -473,61 +467,61 @@ public class Crawler implements Runnable {
         while (true) {
 
 
-                if (SeedsFile.Level >= MAX_PAGES) {
-                    System.out.println("\n Crawling reached its maximum now, " + MAX_PAGES + "pages are available now. ");
-                    SeedsFile.current_line = 0;
+            if (SeedsFile.Level >= MAX_PAGES) {
+                System.out.println("\n Crawling reached its maximum now, " + MAX_PAGES + "pages are available now. ");
+                SeedsFile.current_line = 0;
+                seeds.setCurrentLine();
+                break;
+            }
+            else {
+                String URL;
+                synchronized (seeds) {
+                    URL = seeds.FileReader(SeedsFile.current_line);
                     seeds.setCurrentLine();
-                    break;
                 }
-                else {
-                    String URL;
-                    synchronized (seeds) {
-                         URL = seeds.FileReader(SeedsFile.current_line);
-                        seeds.setCurrentLine();
-                    }
-                    if (!URL.isEmpty())  {
-                        System.out.println("\n Thread num = " + Thread.currentThread().getName() + " now fetch link at line " + Integer.toString(SeedsFile.current_line - 1) + " link is " + URL);
+                if (!URL.isEmpty())  {
+                    System.out.println("\n Thread num = " + Thread.currentThread().getName() + " now fetch link at line " + Integer.toString(SeedsFile.current_line - 1) + " link is " + URL);
 
-                        try {
-                            if(checker.check(new URL(URL)))
-                            {
-                            }
-                        }
-                        catch (IOException exception)
+                    try {
+                        if(checker.check(new URL(URL)))
                         {
-                            System.out.println(exception);
                         }
+                    }
+                    catch (IOException exception)
+                    {
+                        System.out.println(exception);
+                    }
 
-                        Document document = Request(URL);
+                    Document document = Request(URL);
 
-                        if (document!= null) {
+                    if (document!= null) {
 
-                            for(Element currentLink :document.select("a[href]"))
-                            {
+                        for(Element currentLink :document.select("a[href]"))
+                        {
 
-                                String nextLink = currentLink.absUrl("href");
-                                try {
-                                    if(checker.check(new URL(nextLink)))
-                                    {
-                                        System.out.println("Writing to seeds");
-                                        synchronized (seeds) {
-                                            if(robotCheck.linksAdded.containsKey(nextLink)) continue;
-                                            else seeds.FileWriter(nextLink);
-                                        }
+                            String nextLink = currentLink.absUrl("href");
+                            try {
+                                if(checker.check(new URL(nextLink)))
+                                {
+                                    System.out.println("Writing to seeds");
+                                    synchronized (seeds) {
+                                        if(robotCheck.linksAdded.containsKey(nextLink)) continue;
+                                        else seeds.FileWriter(nextLink);
                                     }
                                 }
-                                catch (IOException exception)
-                                {
-                                    System.out.println(exception);
-                                }
-
-
                             }
-                        }
+                            catch (IOException exception)
+                            {
+                                System.out.println(exception);
+                            }
 
+
+                        }
                     }
-                    else {break;}
+
                 }
+                else {break;}
+            }
 
             try {
                 Thread.sleep(500);
