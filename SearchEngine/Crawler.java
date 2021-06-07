@@ -105,7 +105,7 @@ class robotCheck {
                     }
                 }
                 LinksVisited.put(host, disallows);
-                //System.out.println("disalllllllllllllllllllllows are :" + disallows);
+                System.out.println("disalllllllllllllllllllllows are :" + disallows);
 
                 /**********/
                 return true;
@@ -158,7 +158,7 @@ class robotCheck {
             else if (url.toString().endsWith("/#"))
             {
                 s = url.toString().replaceFirst("/#", "");
-                //System.out.println(s);
+                System.out.println(s);
                 url = new URL(s);
             }
             /* String urlFile=url.getFile(); */
@@ -167,16 +167,16 @@ class robotCheck {
 
             if(isAdded(url.getHost().replace("www","")))
             {
-               // System.out.println("already checked");
+                System.out.println("already checked");
                 if(Allowed(url)) {
-                    //System.out.println("\n Allowed to download " + url);
+                    System.out.println("\n Allowed to download " + url);
                     if(!linksAdded.containsKey(uri)) {
                         linksAdded.put(uri, 0);
                         synchronized (SeedsFile.Seeds) {
                             downloadPage(url);
                             InsertDB(url, uri);
                         }
-                        //System.out.println("\n page downloaded");
+                        System.out.println("\n page downloaded");
                         return true;
                     }
                     else
@@ -186,19 +186,19 @@ class robotCheck {
                         synchronized (SeedsFile.Seeds) {
                             UpdateDB(url, uri);
                         }
-                        //System.out.println("\n page existed , rank increased");
+                        System.out.println("\n page existed , rank increased");
                         return false;
                     }
                 }
                 else {
-                    //System.out.println("\n not Allowed to download "+url);
+                    System.out.println("\n not Allowed to download "+url);
                     return false;
                 }
             }
             else
             {
 
-                //System.out.println("Not checked yet !! checking the link ....");
+                System.out.println("Not checked yet !! checking the link ....");
                 if(robotSafe(url.toString())) {
                     if (Allowed(url)){
                         if (!linksAdded.containsKey(uri)) {
@@ -207,7 +207,7 @@ class robotCheck {
                                 downloadPage(url);
                                 InsertDB(url, uri);
                             }
-                           // System.out.println("\n page downloaded");
+                            System.out.println("\n page downloaded");
                             return true;
                         } else {
                             int oldValue = linksAdded.get(uri);
@@ -215,7 +215,7 @@ class robotCheck {
                             synchronized (SeedsFile.Seeds) {
                                 UpdateDB(url, uri);
                             }
-                            //System.out.println("\n page existed , rank increased");
+                            System.out.println("\n page existed , rank increased");
                             return false;
                         }
                     }
@@ -224,7 +224,7 @@ class robotCheck {
         }
         catch (IOException | URISyntaxException exception)
         {
-            //System.out.println("\n Error while try to check for robots.txt "+ exception);
+            System.out.println("\n Error while try to check for robots.txt "+ exception);
             return false;
         }
         return false;
@@ -332,7 +332,7 @@ class SeedsFile {
     {
         FileCreate();
         current_line = getState() ;
-        //System.out.println("Current line:"+current_line);
+        System.out.println("Current line:"+current_line);
     }
     /* File creation :  static since all object from that class will deal with the same version*/
     private void FileCreate() {
@@ -340,15 +340,15 @@ class SeedsFile {
             Seeds = new File("Seeds.txt");
             state = new File("state.txt");
             if (Seeds.createNewFile()||state.createNewFile()) {
-               // System.out.println("\n Seeds and state files created successfully ..! ");
+                System.out.println("\n Seeds and state files created successfully ..! ");
             } else {
-                //System.out.println("\n Files is already existed");
+                System.out.println("\n Files is already existed");
 
 
             }
         }
         catch (IOException error) {
-            //System.out.println("\n An error occurred while creating the file .. " + error.getMessage());
+            System.out.println("\n An error occurred while creating the file .. " + error.getMessage());
         }
     }
     private void updateState() {
@@ -507,7 +507,7 @@ public class Crawler implements Runnable {
                             try {
                                 if(checker.check(new URL(nextLink)))
                                 {
-                                    //System.out.println("Writing to seeds");
+                                    System.out.println("Writing to seeds");
                                     synchronized (seeds) {
                                         if(robotCheck.linksAdded.containsKey(nextLink)) continue;
                                         else seeds.FileWriter(nextLink);
