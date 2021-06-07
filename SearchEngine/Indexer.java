@@ -98,27 +98,9 @@ public class Indexer {
 			uploadToDB(db);
 			long end = System.nanoTime();
 			
-			System.out.println("time taken for processing: " + (start2-start1)/1000000000.0 + " sec");
-			System.out.println("time taken for DB upload: " + (end-start2)/1000000000.0 + " sec");
-			
 			calcIDF(db,docsCount);
 			
-			/*
-			//for debugging purposes
-			int termsInInv = 0;
-			for (HashMap.Entry outterElement : invIndex.entrySet()) {
-				
-				HashMap<String,docContainer> innermap = (HashMap) outterElement.getValue();
-				
-				docContainer doc = (docContainer)innermap.get("C:/Users/Noran/Desktop/Noran/Second Year/Second Term/AP/Project/crawledDocs/index.html");
-				if(doc!= null) {
-					termsInInv += doc.getDF();
-				}	
-			}
 			
-			System.out.println("\n inverted index real Size = "+termsInInv);
-			System.out.println("-----------");
-			*/
 		}
 		
 	}
