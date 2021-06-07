@@ -3,21 +3,18 @@ const { respose, request } = require('express');
 
 const application = require('../core/app');
 
-// router.get('/', function (request, Respose) {
-//     Respose.render('search', {commonWords});
-// });
-
-router.get('/', (req, res) => {
-
-
-    return res.render('search', {
-        common_Words: commonWords
-    })
+router.get('/',async function (request, Respose) {
+    const ejs = require('ejs');
+    const html = await ejs.renderFile('search', "Abdo", {async: true});
+    Respose.send(html);
+    //Respose.render('search');
+    console.log("Abdo was heere");
 });
 
 
+
 router.post('/' , function(req , res){
-    const {word} = req.body.text-capitalize.searchbar.input.onkeyup;
+    const {word} = req.query;
     var result;
     console.log(word);
     if(word !="")
@@ -25,8 +22,8 @@ router.post('/' , function(req , res){
         application.getSearchedWords(word).then( function(result) {
         if (result) {
            console.log(result);
-           commonWords = JSON.stringify(result);
-           res.send(commonWords);
+           result = JSON.stringify(result);
+           res.send(result);
         }
      }).catch(error =>{
          console.error(error);

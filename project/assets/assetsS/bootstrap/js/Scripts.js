@@ -7,21 +7,20 @@ const Wepper = document.querySelector(".wrapper");
 const SuggestionBox = searchWepper.querySelector(".autocom-box");
 const FormInput = document.getElementById("search");
 let UserData ;
-let EmptyArray=[]; 
+let EmptyArray=[];
 
 InputBox.onkeyup = (e)=>{
     let UserData = e.target.value;
-    // $.ajax({
-    //     type: 'POST',
-    //     url: './assets/bootstrap/js/Suggestions.js',
-    //     //data: data,
-    //     success:function(data){
-    //         Suggestions = data;
-    //         Suggestions = Suggestions.split(",");
-    //         console.log(Suggestions);
-    //     }
+    $.ajax({
+        type: 'POST',
+        url: 'http://localhost:3000/search/',
+        data: UserData,
+        success:function(data){
+            EmptyArray = data;
+            console.log(EmptyArray);
+        }
 
-    // });
+    });
     
     if(UserData)
     {
@@ -32,8 +31,10 @@ InputBox.onkeyup = (e)=>{
         //     return data = '<li>' + data + '</li>';
         // });
 
-        EmptyArrayS = '<% commonWords %>';
+        //EmptyArrayS = '<% commonWords %>';
         console.log(EmptyArrayS);
+
+        EmptyArrayS = JSON.parse(EmptyArrayS);
         EmptyArrayS = EmptyArrayS.replace("[", "");
         EmptyArrayS = EmptyArrayS.replace("]", "");
 

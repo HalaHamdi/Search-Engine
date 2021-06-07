@@ -37,20 +37,20 @@
                             <a type="submit" class="search_icon" href="#" onclick="Redirect()"><i class="fas fa-search"
                             style="color: rgb(94,121,152);border-color: rgb(94,121,152);"></i></a>
                             <div class=autocom-box>
-                                <% 
-                                    JSON.parse(common_Words);
+                                <!-- <% 
+                                    document.querySelector(".text-capitalize.searchbar").querySelector("input").onkeyup = (e)=>{
+                                    common_Words = JSON.parse(common_Words);
                                     if(common_Words.length >0){
-                                    JSON.parse(common_Words);
                                     for(int i = 0 ; i < common_Words.length ; i++) %>
-                                    <li><%= common_Words[i] %></li>
-                                   <% } }%>
+                                    <li onclick="select(this)"><%= common_Words[i] %></li>
+                                   <% } } }%> -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- <script>var EmptyArrayS = "<%= commonWords %>";</script> -->
+        <!-- <script>var EmptyArrayS = '<%= common_Words %>'</script> -->
         <input type="hidden" name="Search" id = "Search"/>
         </form>
         <script type="text/javascript" src="/assetsS/bootstrap/js/Scripts.js"></script>

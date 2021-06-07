@@ -1,4 +1,4 @@
-/* commends
+/* commands
     npm init -y
     npm i -D nodemon
     npm i express
