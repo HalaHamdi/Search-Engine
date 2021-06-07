@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException{
 
-         int numThreads = 7;
+         int numThreads = 5;
          SeedsFile File = new SeedsFile();
          Thread []crawlers = new Thread[numThreads];
          for (int i=0;i<numThreads;i++)
