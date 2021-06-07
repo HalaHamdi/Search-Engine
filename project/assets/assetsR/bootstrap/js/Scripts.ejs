@@ -1,0 +1,33 @@
+src="js/jquery-3.5.1.min.js";
+const results = document.querySelector(".results");
+const NumOfLinks = document.querySelector("h1");
+let EmptyArray = [];
+let linkList = [];
+
+
+console.log(Links);
+Links = Links.replace("[", "");
+Links = Links.replace("]", "");
+
+linkList = Links.split(',');
+console.log(linkList);
+
+// const Http = new XMLHttpRequest();
+// const url='links.js';
+// Http.open("GET", url);
+// Http.send();
+
+// Http.onreadystatechange = (e,f) => {
+//   console.log(Http.responseText);
+//   console.log(f)
+// }
+
+
+for(let i =0; i < linkList.length; i++){
+    EmptyArray += '<div class="card" style="margin-top: 10px;box-shadow: 2px 2px var(--gray);"><div class="card-body" style="background: #efefef;margin-top: 0px;"><h4 class="card-title">Title</h4><a class = "link" href ="'+ links[i] +'">' +
+    linkList[i] +'</a><h6 class="text-muted card-subtitle mb-2">Subtitle</h6><p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><a class="card-link" href="#">Link</a><a class="card-link" href="#">Link</a></div></div>';
+}
+results.innerHTML=EmptyArray;
+let LinkSize = linkList.length;
+let display = "Searching Results : "+ LinkSize +" result.&nbsp;";
+NumOfLinks.innerHTML= display;
