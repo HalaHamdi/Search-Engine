@@ -6,18 +6,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>search</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assetsS/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/Growing-Search-Bar-Animated-Text-Input.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="/assetsS/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assetsS/css/Growing-Search-Bar-Animated-Text-Input.css">
+    <link rel="stylesheet" href="/assetsS/css/styles.css">
 </head>
 
 
 <body style="background: #ffffff;">
     <section
-        style="background: url(&quot;assets/img/7ea43f13298c22ebdd9d1913954db471.jpg&quot;);height: 650px;background-size: cover;">
-        <form action="D:\CMP\fourth term\Advanced Programing\project\rseult\index.html" method="get" id= "form">
+        style="background: url(&quot;/assetsS/img/7ea43f13298c22ebdd9d1913954db471.jpg&quot;);height: 650px;background-size: cover;">
+        <form action="../result" method="get" id= "form">
         <div class="row" style="margin-top: 0px;">
             <div class="col d-lg-flex justify-content-lg-center" style="margin-top: 50px;margin-right: 0px;">
                 <h1 class="d-sm-flex justify-content-sm-center"
@@ -33,22 +33,30 @@
                     <div class="wrapper">
                         <div class="text-capitalize searchbar" style="border-color: rgb(0,0,0);background: rgb(0,0,0);">
                             <input type="text" class="search_input" placeholder="Search...">
+                            
                             <a type="submit" class="search_icon" href="#" onclick="Redirect()"><i class="fas fa-search"
                             style="color: rgb(94,121,152);border-color: rgb(94,121,152);"></i></a>
                             <div class=autocom-box>
+                                <!-- <% 
+                                    document.querySelector(".text-capitalize.searchbar").querySelector("input").onkeyup = (e)=>{
+                                    common_Words = JSON.parse(common_Words);
+                                    if(common_Words.length >0){
+                                    for(int i = 0 ; i < common_Words.length ; i++) %>
+                                    <li onclick="select(this)"><%= common_Words[i] %></li>
+                                   <% } } }%> -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <input type="hidden" name="Search" id = "search"/>
+        <!-- <script>var EmptyArrayS = '<%= common_Words %>'</script> -->
+        <input type="hidden" name="Search" id = "Search"/>
         </form>
-        <script src="assets/bootstrap/js/Suggestions.js"></script>
-        <script src="assets/bootstrap/js/Scripts.js"></script>
+        <script type="text/javascript" src="/assetsS/bootstrap/js/Scripts.js"></script>
     </section>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assetsS/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assetsS/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>

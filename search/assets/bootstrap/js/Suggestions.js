@@ -1,1 +1,0 @@
-Nadaaaaa,Yaraaaaaaaa,Safaaaaaaa,Abdozzz,Hanoon,Sayeed,Manoooon,Halaaaa,Noraaaan,walking
