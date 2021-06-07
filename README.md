@@ -21,12 +21,13 @@ This is an Advanced Programming project handed to second year computer engineer 
 - Interface
 ```
 ---------------------------------
+in this interface we use node js and ejs(embedded java script) as an interactive hosting mechanism.  
 - Done
    - 2 HTML web pages
    - handling suggestions of words for a certain letters
    - backend for both
 - Left
-   - handling client server communication to get list of links as a result and list words as a suggestions
+   - final connect between node js and html files(the .ejs fils dosen't define the globale variables)
    - logo
 
 
