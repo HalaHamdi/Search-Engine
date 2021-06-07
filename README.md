@@ -21,7 +21,7 @@ This is an Advanced Programming project handed to second year computer engineer 
 - Interface
 ```
 ---------------------------------
-in this interface we use node js and ejs(embedded java script) as an interactive hosting mechanism.  
+in this interface we use node js and ejs(embedded java script).  
 - Done
    - 2 HTML web pages
    - handling suggestions of words for a certain letters
