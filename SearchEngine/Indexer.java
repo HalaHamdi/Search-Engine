@@ -142,6 +142,15 @@ public class Indexer {
 		//Applying that function for each document retrieved from the collection
 		crawledDocCollection.find().forEach(extractPath);
 		
+		/*This should be handled at the crawler side not the Indexer!*/
+		//Handling the or sign crawled document problem 
+		for(int i = 0;i<localPaths.size();i++) {
+			int orSignIndex = localPaths.get(i).indexOf('|');
+			if(orSignIndex != -1) {
+				localPaths.remove(i);
+				urls.remove(i);
+			}
+		}
 	}
 	
 	public static String extractTextFromHTML(Reader reader) throws IOException {
