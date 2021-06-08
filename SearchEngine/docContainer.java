@@ -1,5 +1,4 @@
 package SearchEngine;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class docContainer {
 		return tagsList;
 	}
 	
-	public int getDF(){
+	public int getTF(){
 		return positionList.size();
 	}
 	

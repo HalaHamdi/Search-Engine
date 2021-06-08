@@ -108,16 +108,17 @@ public class Indexer {
 	}
 	
 	public static void calcIDF(MongoDatabase db, int docsCount) {
-		MongoCollection invColl = db.getCollection("invertedIndex");
+		MongoCollection invColl = db.getCollection("invertedindex");
 		
-		Consumer<Document> getTF = doc -> {
-			double idf = java.lang.Math.log(docsCount / (double)doc.get("TF")); 
+		Consumer<Document> getDF = doc -> {
+			int DF = (int)doc.get("DF");
+			double idf = java.lang.Math.log(docsCount / (double)DF); 
 			Bson update = set("idf",idf);
 			invColl.updateOne(doc, update);
 		};
 		
 		//Applying that function for each document retrieved from the collection
-		invColl.find().forEach(getTF);
+		invColl.find().forEach(getDF);
 	}
 	
 	public static void uploadTokenCountToDB(MongoDatabase db, int docNum, int tokenCount) {
@@ -274,7 +275,7 @@ public class Indexer {
 			{
 				docContainer docInAppValue = (docContainer)docInApp.getValue();	
 				Document docInDB = new Document("doc_id",docInApp.getKey()).
-										append("DF", docInAppValue.getDF()).
+										append("TF", docInAppValue.getTF()).
 										append("position", docInAppValue.getPositionList());
 				listOfDocumentInDB.add(docInDB);
 			}
@@ -283,7 +284,7 @@ public class Indexer {
 			Bson filter = eq("word_id",wordInApp.getKey().toString());
 			
 			//the updates we want to apply on that to-be-updated word entry
-			Bson update1 = inc("TF",listOfDocumentInApp.size());
+			Bson update1 = inc("DF",listOfDocumentInApp.size());
 			Bson update2 = push("doc",BasicDBObjectBuilder.start("$each", listOfDocumentInDB).get());
 			Bson update3 = combine(update1,update2);
 			invColl.updateOne(filter, update3, options);
