@@ -2,9 +2,85 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8ac3ac2d-072f-4292-b74d-d6c39e1507d5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/project/assets/assetsR/bootstrap/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/assets/assetsR/bootstrap/js/Scripts.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/assets/assetsR/bootstrap/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/assets/assetsR/bootstrap/js/pagination.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/core/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/routes/result.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/routes/search.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Names.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SearchEngine/Crawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/SearchEngine/Crawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SearchEngine/Indexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/SearchEngine/Indexer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Seeds.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Seeds.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/bootstrap/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/bootstrap/js/Scripts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/bootstrap/js/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/bootstrap/js/links.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/css/Growing-Search-Bar-Animated-Text-Input.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/css/Growing-Search-Bar-Animated-Text-Input.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/css/Navigation-with-Search.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/css/Navigation-with-Search.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-brands-400.eot" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-brands-400.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-brands-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-brands-400.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-brands-400.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-brands-400.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-brands-400.woff" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-brands-400.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-brands-400.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-brands-400.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-regular-400.eot" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-regular-400.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-regular-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-regular-400.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-regular-400.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-regular-400.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-regular-400.woff" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-regular-400.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-regular-400.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-regular-400.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-solid-900.eot" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-solid-900.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-solid-900.svg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-solid-900.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-solid-900.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-solid-900.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-solid-900.woff" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-solid-900.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fa-solid-900.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fa-solid-900.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/fonts/fontawesome-all.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/fonts/fontawesome-all.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/img/رسميا لعبة Sniper Ghost Warrior Contracts 2 قيد التطوير الأن و هذا موعد الكشف عن النهائي.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/img/رسميا لعبة Sniper Ghost Warrior Contracts 2 قيد التطوير الأن و هذا موعد الكشف عن النهائي.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/views/result.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/assets/js/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsR/js/jquery.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rseult/result.bsdesign" beforeDir="false" afterPath="$PROJECT_DIR$/project/views/rseult/result.bsdesign" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/bootstrap/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/bootstrap/css/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/bootstrap/js/Scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/bootstrap/js/Scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/bootstrap/js/Suggestions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/bootstrap/js/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/bootstrap/js/bootstrap.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/css/Growing-Search-Bar-Animated-Text-Input.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/css/Growing-Search-Bar-Animated-Text-Input.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/css/Navigation-with-Search.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/css/Navigation-with-Search.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-brands-400.eot" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-brands-400.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-brands-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-brands-400.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-brands-400.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-brands-400.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-brands-400.woff" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-brands-400.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-brands-400.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-brands-400.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-regular-400.eot" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-regular-400.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-regular-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-regular-400.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-regular-400.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-regular-400.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-regular-400.woff" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-regular-400.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-regular-400.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-regular-400.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-solid-900.eot" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-solid-900.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-solid-900.svg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-solid-900.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-solid-900.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-solid-900.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-solid-900.woff" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-solid-900.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fa-solid-900.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fa-solid-900.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/fonts/fontawesome-all.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/fonts/fontawesome-all.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/img/3776-10.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/img/3776-10.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/img/3f255dce3925048d722c57b02fb00bcd.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/img/3f255dce3925048d722c57b02fb00bcd.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/img/4546d4eadd997c229ea14c0558b48ee3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/img/4546d4eadd997c229ea14c0558b48ee3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/img/7ea43f13298c22ebdd9d1913954db471.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/img/7ea43f13298c22ebdd9d1913954db471.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/img/b17e1569f58466f959445c2930211b2f.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/img/b17e1569f58466f959445c2930211b2f.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/img/images (10).jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/img/images (10).jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/img/images (11).jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/img/images (11).jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/img/sniper-ghost-warrior-contracts-preview-aiming-to-be-the-ulti_bw6j.1280.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/img/sniper-ghost-warrior-contracts-preview-aiming-to-be-the-ulti_bw6j.1280.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/img/رسميا لعبة Sniper Ghost Warrior Contracts 2 قيد التطوير الأن و هذا موعد الكشف عن النهائي.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/img/رسميا لعبة Sniper Ghost Warrior Contracts 2 قيد التطوير الأن و هذا موعد الكشف عن النهائي.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/views/search.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/assets/js/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/assets/assetsS/js/jquery.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/search.bsdesign" beforeDir="false" afterPath="$PROJECT_DIR$/project/views/search/search.bsdesign" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/state.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,8 +101,24 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Indexer">
+    <configuration name="Indexer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SearchEngine.Indexer" />
+      <module name="Search-Engine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="SearchEngine.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="SearchEngine.Main" />
       <module name="Search-Engine" />
@@ -42,6 +134,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Indexer" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
